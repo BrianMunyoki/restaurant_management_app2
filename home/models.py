@@ -9,17 +9,17 @@ class Customer(models.Model):
     Order_time=models.TimeField()
     
     def __str__(self):
-        return self.Customer
+        return f"{self.customer_name} - {self.email_address}"
 
 class Chef(models.Model):
     chef_name=models.CharField(max_length=50)
     def __str__(self):
-        return self.Chef
+        return self.chef_name
 class Food(models.Model):
     food_name=models.CharField(max_length=50)
     Ingredients=models.CharField(max_length=200)
     def __str__(self):
-        return self.Food
+        return f"{self.food_name} - {self.Ingredients}"
 class Menu(models.Model):
     table_number=models.IntegerField()
     food=models.ForeignKey(Food ,on_delete=models.CASCADE)
@@ -27,4 +27,4 @@ class Menu(models.Model):
     customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.Menu
+        return f"{self.table_number} -{self.food} -{self.chef} - {self.customer}"

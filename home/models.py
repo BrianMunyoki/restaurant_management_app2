@@ -1,22 +1,30 @@
 from django.db import models
 from django.utils import timezone
+from django.core.validators import EmailValidator
 
-#Define the validator
 
-validate_at_symbol=RegexValidator(
-    regex='@',
-    message='Field must contain the @ symbol',
-    code='invalid_at_symbol'
-)
 class Customer(models.Model):
-    customer_name=models.CharField(50)
-    customer_id=models.IntegerField()
-    email_address=models.CharField(max_length=50,validators=[validate_at_symbol] )
+    customer_name=models.CharField(max_length=50)
+    email_address=models.EmailField(max_length=50)
     Order_time=models.TimeField()
+    
+    def __str__(self):
+        return self.Customer
 
 class Chef(models.Model):
-    chef_name=models.CharField(50)
-    chef_id=models.IntegerField()
+    chef_name=models.CharField(max_length=50)
+    def __str__(self):
+        return self.Chef
+class Food(models.Model):
+    food_name=models.CharField(max_length=50)
+    Ingredients=models.CharField(max_length=200)
+    def __str__(self):
+        return self.Food
+class Menu(models.Model):
+    table_number=models.IntegerField()
+    food=models.ForeignKey(Food ,on_delete=models.CASCADE)
+    chef=models.ForeignKey(Chef ,on_delete=models.CASCADE)
+    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
 
-
-
+    def __str__(self):
+        return self.Menu
